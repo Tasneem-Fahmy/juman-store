@@ -7,8 +7,7 @@
     <title>مجوهرات جُمان</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap"
         rel="stylesheet">
-
-    <style>
+<style>
         /* التنسيقات العامة */
         body {
             margin: 0;
@@ -44,15 +43,8 @@
         }
 
         @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(15px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
         }
 
         /* الشريط العلوي */
@@ -106,6 +98,20 @@
 
         .nav-links a:hover {
             color: #d81b60;
+        }
+
+        /* تعديل الموبايل الجديد */
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 10px;
+                margin-top: 10px;
+            }
         }
 
         /* السلة */
