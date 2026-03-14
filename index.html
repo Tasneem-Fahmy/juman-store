@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مجوهرات جُمان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* التنسيقات العامة */
+        body {
+            margin: 0;
+            font-family: 'Tajawal', sans-serif;
+            background-color: #fdfaf6;
+            color: #4a3b32;
+        }
+
+        /* الشاشة الافتتاحية */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f4e1d2, #e9b0b3);
+            transition: opacity 0.5s ease;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Amiri', serif;
+            font-size: 6rem;
+            margin: 0;
+            color: #5c4033;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(15px);
+            }
+        }
+
+        /* الشريط العلوي */
+        .navbar {
+            position: fixed;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            transition: top 0.4s ease;
+            z-index: 1000;
+        }
+
+        .navbar.sticky {
+            top: 0;
+        }
+
+        .nav-logo {
+            width: 70px;
+            height: 70px;
+            background: #e9b0b3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #5c4033;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #d81b60;
+        }
+
+        /* السلة */
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: #f4e1d2;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: #d81b60;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* قسم المنتجات */
+        .products-section {
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 10px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #d81b60;
+        }
+
+        .btn-add {
+            background: #5c4033;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 15px;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #e9b0b3;
+        }
+
+        /* نافذة السلة */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .cart-items-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            color: #d81b60;
+            border: 1px solid #d81b60;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 15px;
+            float: left;
+            font-family: inherit;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero" id="hero">
+        <h1>جُمان</h1>
+        <div class="scroll-down">مرر لأسفل ↓</div>
+    </div>
+
+    <div class="navbar" id="navbar">
+        <div class="nav-logo">جُمان</div>
+        <div class="nav-links">
+            <a href="about.html">من هم جُمان؟</a>
+            <a href="contact.html">الاتصال بالعملاء</a>
+            <a href="review.html">اكتب رأيك</a>
+            <a href="https://chat.whatsapp.com/CMhWjFJgMXoKwoCENjhQEP?mode=ems_copy_c" target="_blank">جروب الواتساب</a>
+            <a href="https://www.facebook.com/profile.php?id=61575682162156" target="_blank">فيسبوك</a>
+        </div>
+        <div class="cart-icon" onclick="openCart()">
+            🛒 <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </div>
+
+    <div class="products-section" id="productsContainer">
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <button class="close-btn" onclick="closeCart()">إغلاق</button>
+            <h2 style="color: #5c4033; clear: both;">سلة الشراء 🛍️</h2>
+            <div class="cart-items-list" id="cartItems"></div>
+            <h3 id="cartTotal" style="color: #d81b60;">الإجمالي: 0 جنيه</h3>
+            <p style="font-size: 0.85rem; color: #777;">* الدفع عند الاستلام أو فودافون كاش.</p>
+            <a href="#" class="whatsapp-btn" id="waBtn" target="_blank">💬 اضغط لتتم عملية شرائك</a>
+        </div>
+    </div>
+
+    <script>
+        // حركة الشريط العلوي
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const hero = document.getElementById('hero');
+            if (window.scrollY > 100) {
+                navbar.classList.add('sticky');
+                hero.style.opacity = '0';
+            } else {
+                navbar.classList.remove('sticky');
+                hero.style.opacity = '1';
+            }
+        });
+
+        // ==========================================
+        // 🛍️ منطقة إضافة المنتجات (الصور والأسعار) 🛍️
+        // ==========================================
+        const products = [
+            { name: "كومبو جُمان الملكي", price: 220, image: "images/1.jpeg" },
+            { name: "سلسلة ذهبية رقيقة", price: 60, image: "images/2.jpg" },
+            { name: "سلسلة انيقة تليق بكِ", price: 120, image: "images/3.jpeg" }
+        ];
+
+        // رسم المنتجات في الموقع أوتوماتيك
+        const container = document.getElementById('productsContainer');
+        products.forEach(product => {
+            container.innerHTML += `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">${product.price} جنيه</p>
+                    <button class="btn-add" onclick="addToCart(event, '${product.name}', ${product.price})">اضغط للإضافة للسلة</button>
+                </div>
+            `;
+        });
+
+        // برمجة السلة
+        let cart = [];
+        let totalPrice = 0;
+
+        function addToCart(event, productName, productPrice) {
+            cart.push({ name: productName, price: productPrice });
+            totalPrice += productPrice;
+            document.getElementById('cartCount').innerText = cart.length;
+
+            // إشعار بسيط في الـ Console بدل الـ Alert المزعجة
+            console.log('تمت إضافة ' + productName + ' للسلة 🌸');
+
+            // تغيير نص الزرار لحظياً لتأكيد الإضافة
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "تمت الإضافة ✅";
+            btn.style.background = "#e9b0b3";
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = "#5c4033";
+            }, 1500);
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'flex';
+            let itemsHtml = '';
+            let whatsappMessage = "مرحباً جُمان، أريد إتمام هذا الطلب:%0A";
+
+            if (cart.length === 0) {
+                itemsHtml = '<p style="text-align:center;">السلة فارغة</p>';
+            } else {
+                cart.forEach(item => {
+                    itemsHtml += `<p>▪️ ${item.name} - ${item.price} جنيه</p>`;
+                    whatsappMessage += `- ${item.name}%0A`;
+                });
+            }
+
+            document.getElementById('cartItems').innerHTML = itemsHtml;
+            document.getElementById('cartTotal').innerText = `الإجمالي: ${totalPrice} جنيه`;
+
+            whatsappMessage += `%0A*الإجمالي الكلي: ${totalPrice} جنيه*`;
+            const phoneNumber = "201119782545"; // رقم استقبال الطلبات
+            document.getElementById('waBtn').href = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
